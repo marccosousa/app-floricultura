@@ -1,0 +1,6 @@
+@API_Floricultura_HostAddress = http://localhost:5032
+
+GET {{API_Floricultura_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
