@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace API_Floricultura.Domain.DTOs
 {
     public class RegisterDTO
     {
+        [JsonIgnore]
         public int UserId { get; set; }
 
         [Required]

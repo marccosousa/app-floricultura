@@ -34,15 +34,15 @@ namespace API_Floricultura.Controllers
         }
 
         [HttpGet("{Id}", Name = "ObterUsuario")]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUserById()
+        public async Task<ActionResult<UserDTO>> GetUserById(int Id)
         {
-            var users = await _uof.UserRepository.GetAllAsync();
+            var user = await _uof.UserRepository.GetAsync(u => u.UserId == Id);
 
-            if (users is null)
+            if (user is null)
                 return NotFound();
 
-            var usersDto = _mapper.Map<IEnumerable<UserDTO>>(users);
-            return Ok(usersDto);
+            var userDto = _mapper.Map<UserDTO>(user);
+            return Ok(userDto);
         }
 
         [HttpPost]
