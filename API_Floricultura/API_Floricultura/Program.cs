@@ -1,7 +1,9 @@
 using API_Floricultura.Context;
 using API_Floricultura.Data;
 using API_Floricultura.Domain.Contracts;
+using API_Floricultura.Domain.DTOs.Mappings;
 using API_Floricultura.Repository;
+using API_Floricultura.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection))
 
 );
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnityOfWork, UnityOfWork>(); 
+
+builder.Services.AddAutoMapper(typeof(ProfileMap));
 
 //Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

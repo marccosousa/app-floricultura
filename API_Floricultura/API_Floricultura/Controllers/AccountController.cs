@@ -13,7 +13,7 @@ namespace API_Floricultura.Controllers
     {
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDTO userDTO)
+        public async Task<IActionResult> Register(RegisterDTO userDTO)
         {
             var response = await userAccount.CreateAccount(userDTO); 
             return Ok(response);

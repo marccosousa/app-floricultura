@@ -16,20 +16,20 @@ namespace API_Floricultura.Repository
         RoleManager<IdentityRole> roleManager, 
         IConfiguration config) : IUserAccount
     {
-        public async Task<GeneralResponse> CreateAccount(UserDTO userDTO)
+        public async Task<GeneralResponse> CreateAccount(RegisterDTO registerDTO)
         {
-            if (userDTO is null) return new GeneralResponse(false, "Model is empty");
+            if (registerDTO is null) return new GeneralResponse(false, "Model is empty");
             var newUser = new ApplicationUser()
             {
-                Name = userDTO.Name,
-                Email = userDTO.Email,
-                PasswordHash = userDTO.Password,
-                UserName = userDTO.Email
+                Name = registerDTO.Name,
+                Email = registerDTO.Email,
+                PasswordHash = registerDTO.Password,
+                UserName = registerDTO.Email
             };
             var user = await userManager.FindByEmailAsync(newUser.Email!);
             if (user is not null) return new GeneralResponse(false, "User registered already");
 
-            var createUser = await userManager.CreateAsync(newUser, userDTO.Password!);
+            var createUser = await userManager.CreateAsync(newUser, registerDTO.Password!);
             if (!createUser.Succeeded) return new GeneralResponse(false, "Error occured.. please try again");
 
             //Assign Default Role : Admin to first registrar; rest is user
