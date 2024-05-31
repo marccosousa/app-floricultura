@@ -7,6 +7,7 @@ namespace API_Floricultura.Domain.Models
         public int ProductId { get; set; }
         public string? Name { get; set; }
         public int Quantity { get; set; }
+        [JsonIgnore]
         public int UserId { get; set; }
         [JsonIgnore]
         public User? User { get; set; }

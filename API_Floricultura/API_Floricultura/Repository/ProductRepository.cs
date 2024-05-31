@@ -9,9 +9,5 @@ namespace API_Floricultura.Repository
     {
         public ProductRepository(AppDbContext context) : base(context) { }
 
-        public async Task<IEnumerable<Product>> GetProductsByUserAsync(int userId)
-        {
-            return await _context.Products.Where(p => p.UserId == userId).ToListAsync(); 
-        }
     }
 }

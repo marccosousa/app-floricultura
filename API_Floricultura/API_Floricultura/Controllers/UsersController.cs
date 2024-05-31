@@ -23,7 +23,7 @@ namespace API_Floricultura.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDTO>>> Get()
         {
-            var users = await _uof.UserRepository.GetAllAsync();
+            var users = await _uof.UserRepository.GetUsersWithProducts();
 
             if (users is null) 
             {
@@ -33,10 +33,10 @@ namespace API_Floricultura.Controllers
             return Ok(usersDto);
         }
 
-        [HttpGet("{Id}", Name = "ObterUsuario")]
-        public async Task<ActionResult<UserDTO>> GetUserById(int Id)
+        [HttpGet("{id}", Name = "ObterUsuario")]
+        public async Task<ActionResult<UserDTO>> GetUserById(int id)
         {
-            var user = await _uof.UserRepository.GetAsync(u => u.UserId == Id);
+            var user = await _uof.UserRepository.GetUserWithProducts(id);
 
             if (user is null)
                 return NotFound();

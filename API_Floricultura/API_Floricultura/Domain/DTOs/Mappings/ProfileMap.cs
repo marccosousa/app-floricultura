@@ -9,7 +9,9 @@ namespace API_Floricultura.Domain.DTOs.Mappings
        {
             CreateMap<User,RegisterDTO>().ReverseMap();
             CreateMap<User, LoginDTO>().ReverseMap();
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap().
+                ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products));
+            CreateMap<Product, ProductDTO>().ReverseMap();
         }
     }
 }
