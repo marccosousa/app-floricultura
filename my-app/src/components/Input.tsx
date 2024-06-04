@@ -1,15 +1,16 @@
-import { View, Text, TextInput, ButtonProps } from 'react-native';
+import { View, Text, TextInput, TextInputProps } from 'react-native';
 
-interface InputProps extends ButtonProps {
+interface InputProps extends TextInputProps {
   title: string;
   placeholder: string;
   secureTextEntry: boolean;
 }
-export function Input({ title, placeholder, secureTextEntry }: InputProps) {
+export function Input({ title, placeholder, secureTextEntry, ...props }: InputProps) {
   return (
     <View>
       <Text className="font-bold mb-2">{title}</Text>
       <TextInput
+        {...props}
         placeholder={placeholder}
         autoCapitalize="none"
         secureTextEntry={secureTextEntry}
