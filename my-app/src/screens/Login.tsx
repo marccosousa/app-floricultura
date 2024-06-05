@@ -12,7 +12,7 @@ import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { useState } from 'react';
-import ConnectionAPI, { ConnectionAPIPost } from '../connection/connectionAPI';
+import { Home, UserData } from './Home';
 
 export function Login() {
   const [email, setEmail] = useState<string>('');
@@ -22,12 +22,20 @@ export function Login() {
 
   const handleOnPress = async () => {
     setLoading(true);
-    await ConnectionAPIPost('http://192.168.0.10:5032/api/Users/login', {
-      email,
-      password,
-    }).catch(() => {
-      setErrorMessage('Usuário ou senha inválidos.');
-    });
+    const responseBd = await axios
+      .post('http://192.168.0.10:5032/api/Users/login', {
+        email,
+        password,
+      })
+      .then((responseBd) => {
+        console.log(responseBd.data);
+        const userData = responseBd.data;
+        console.log(userData);
+        navigate('Home', { userData });
+      })
+      .catch(() => {
+        setErrorMessage('Usuário ou senha inválidos.');
+      });
     setLoading(false);
   };
 
