@@ -59,6 +59,23 @@ namespace API_Floricultura.Controllers
             return new CreatedAtRouteResult("ObterUsuario", new {id = newUserDto.UserId}, newUserDto);
         }
 
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<UserDTO>> PostLogin(LoginDTO loginDto)
+        {
+            if (loginDto is null)
+                return BadRequest("Insira os dados corretamente");
+            
+            var userBd = await _uof.UserRepository.GetAsync(u => u.Email == loginDto.Email && u.Password == loginDto.Password);
+            if (userBd is null)
+                return NotFound(new { Message = "Usuário ou senha inválidos" });
+
+            var user = await _uof.UserRepository.GetUserWithProducts(userBd.UserId);
+            var userDto = _mapper.Map<UserDTO>(user);
+
+            return new CreatedAtRouteResult("ObterUsuario", new { id = user.UserId }, userDto);
+        }
+
         [HttpPut("{id:int}")]
         public async Task<ActionResult<UserDTO>> Put(int id, UserDTO userDto)
         {
