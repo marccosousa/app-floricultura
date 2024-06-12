@@ -4,6 +4,8 @@ using API_Floricultura.Repository.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Security.Cryptography; 
 
 namespace API_Floricultura.Controllers
 {
@@ -48,15 +50,29 @@ namespace API_Floricultura.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDTO>> Post(RegisterDTO userDto)
         {
-            if  (userDto is null)
+            if (userDto is null)
                 return BadRequest();
+
+            var users = await _uof.UserRepository.GetAllAsync();
+
+            foreach (var u in users)
+            {
+                if (u.Email == userDto.Email)
+                    return Conflict(new { message = "Usuário já cadastrado." });
+            }
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(userDto.Password));
+                var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                userDto.Password = hash;
+            }
 
             var user = _mapper.Map<User>(userDto);
             var newUser = _uof.UserRepository.Create(user);
-            await _uof.CommitAsync(); 
+            await _uof.CommitAsync();
             var newUserDto = _mapper.Map<RegisterDTO>(newUser);
 
-            return new CreatedAtRouteResult("ObterUsuario", new {id = newUserDto.UserId}, newUserDto);
+            return new CreatedAtRouteResult("ObterUsuario", new { id = newUserDto.UserId }, newUserDto);
         }
 
         [HttpPost]
@@ -65,7 +81,15 @@ namespace API_Floricultura.Controllers
         {
             if (loginDto is null)
                 return BadRequest("Insira os dados corretamente");
-            
+
+            // Crie um hash da senha fornecida
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+                var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+                loginDto.Password = hash;
+            }
+
             var userBd = await _uof.UserRepository.GetAsync(u => u.Email == loginDto.Email && u.Password == loginDto.Password);
             if (userBd is null)
                 return NotFound(new { Message = "Usuário ou senha inválidos" });
