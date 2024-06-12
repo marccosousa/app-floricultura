@@ -1,31 +1,24 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  StatusBar,
-  TextInputChangeEventData,
-  NativeSyntheticEvent,
-} from 'react-native';
+import { View, Text, TextInputChangeEventData, NativeSyntheticEvent } from 'react-native';
 import ImgLogin from '../assets/imgs/ImgLogin';
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { useState } from 'react';
-import { Home, UserData } from './Home';
+import CryptoJS from 'crypto-js';
 
 export function Login() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
   const handleOnPress = async () => {
     setLoading(true);
+    const hashedPassword = CryptoJS.SHA256(password).toString();
     const responseBd = await axios
       .post('http://192.168.0.10:5032/api/Users/login', {
         email,
-        password,
+        password: hashedPassword,
       })
       .then((responseBd) => {
         console.log(responseBd.data);
@@ -90,7 +83,7 @@ export function Login() {
               'py-2 px-4 rounded-md mt-2 bg-[#f9a82644] items-center justify-center h-14'
             }
             styleText="text-[#FF9D00]"
-            onPress={() => navigate('Register' as never)}
+            onPress={() => navigate('Register')}
           />
         </View>
       </View>

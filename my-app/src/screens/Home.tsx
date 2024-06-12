@@ -16,8 +16,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 import { ModalAddProduct } from '../components/ModalAddProduct';
 import axios from 'axios';
+import { CardProduct } from '../components/CardProduct';
 
 export interface UserData {
+  quantity: any;
   userId: number;
   name: string;
   email: string;
@@ -46,19 +48,9 @@ export function Home({ route }: { route: any }) {
   };
 
   function renderItem({ item }: { item: UserData['products'][number] }) {
-    return (
-      <View className="p-4 mx-3 mb-3 flex flex-col bg-white rounded-md border border-[#F9A826]">
-        <Text className="text-base font-semibold text-gray-900">{item.name}</Text>
-        <View className="flex-row justify-between items-center">
-          <Text className="text-sm text-gray-500">Quantidade: {item.quantity}</Text>
-          <View className="flex-row space-x-2">
-            <ButtonEdit />
-            <ButtonDelete id={item.productId} onDelete={refreshProducts} />
-          </View>
-        </View>
-      </View>
-    );
+    return <CardProduct item={item} onDelete={refreshProducts} />;
   }
+
   return (
     <SafeAreaView className="bg-white flex-1">
       <View>
