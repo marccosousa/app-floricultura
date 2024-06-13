@@ -105,5 +105,33 @@ namespace API_Floricultura.Controllers
             await _uof.CommitAsync();
             return Ok(product);
         }
+
+        [HttpPost("add-quantity/{id:int}")]
+        public async Task<ActionResult<ProductDTO>> AddQuantity(int id, int quantity)
+        {
+            var product = await _uof.ProductRepository.GetAsync(p => p.ProductId == id);
+            if (product is null)
+                return NotFound("Produto não encontrado");
+
+            product.AddQuantity(quantity);
+
+            var productDto = _mapper.Map<ProductDTO>(product);
+            await _uof.CommitAsync();
+            return Ok(productDto);
+        }
+
+        [HttpDelete("remove-quantity/{id:int}")]
+        public async Task<ActionResult<ProductDTO>> RemoveQuantity(int id, int quantity)
+        {
+            var product = await _uof.ProductRepository.GetAsync(p => p.ProductId == id);
+            if (product is null)
+                return NotFound("Produto não encontrado");
+
+            product.RemoveQuantity(quantity);
+            await _uof.CommitAsync();
+
+            var productDto = _mapper.Map<ProductDTO>(product);
+            return Ok(productDto);
+        }
     }
 }

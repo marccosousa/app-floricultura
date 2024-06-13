@@ -11,5 +11,21 @@ namespace API_Floricultura.Domain.Models
         public int UserId { get; set; }
         [JsonIgnore]
         public User? User { get; set; }
+
+        public int AddQuantity(int quantity)
+        {
+            return Quantity += quantity; 
+        }
+
+        public int RemoveQuantity(int quantity)
+        {
+            Quantity -= quantity;
+            if (Quantity < 0)
+                Quantity = 0;
+            return Quantity;
+
+        }
     }
+
+    
 }
