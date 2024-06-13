@@ -18,14 +18,25 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.marcolaexpo.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "packetOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "ts", "svg"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "ts",
+        "svg"
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "dc38d11f-b1ba-4d3d-a82d-5b0327f4a522"
+      }
     }
   }
 }
