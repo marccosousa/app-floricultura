@@ -1,17 +1,6 @@
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Modal,
-  Alert,
-  ListRenderItemInfo,
-  ScrollView,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Modal, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { HomeHeader } from '../components/HomeHeader';
-import { ButtonDelete } from '../components/ButtonDelete';
-import { ButtonEdit } from '../components/ButtonEdit';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 import { ModalAddProduct } from '../components/ModalAddProduct';
@@ -48,7 +37,7 @@ export function Home({ route }: { route: any }) {
   };
 
   function renderItem({ item }: { item: UserData['products'][number] }) {
-    return <CardProduct item={item} onDelete={refreshProducts} />;
+    return <CardProduct item={item} onDelete={refreshProducts} refreshProducts={refreshProducts} />;
   }
 
   return (

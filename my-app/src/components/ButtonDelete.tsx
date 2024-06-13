@@ -26,7 +26,7 @@ export function ButtonDelete({ id, onDelete }: ButtonDeleteProps) {
 
   return (
     <TouchableOpacity
-      className="inline-flex items-center px-4 py-2 bg-red-600 rounded-md ml-2"
+      className="inline-flex items-center px-4 py-2 bg-red-600 rounded-md"
       onPress={handleDelete}
     >
       <Icon name="trash-2" size={20} />
