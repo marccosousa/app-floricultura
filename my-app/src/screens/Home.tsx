@@ -27,7 +27,7 @@ export function Home({ route }: { route: any }) {
   const refreshProducts = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.0.10:5032/api/products/user-products/${userData.userId}`
+        `https://api-floricultura.azurewebsites.net/api/products/user-products/${userData.userId}`
       );
       setProducts(response.data);
     } catch (error) {

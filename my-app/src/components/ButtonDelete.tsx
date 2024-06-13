@@ -10,7 +10,9 @@ interface ButtonDeleteProps {
 export function ButtonDelete({ id, onDelete }: ButtonDeleteProps) {
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://192.168.0.10:5032/api/products/${id}`);
+      const response = await axios.delete(
+        `https://api-floricultura.azurewebsites.net/api/products/${id}`
+      );
 
       if (response) {
         Alert.alert('Sucesso', 'Produto removido com sucesso!');

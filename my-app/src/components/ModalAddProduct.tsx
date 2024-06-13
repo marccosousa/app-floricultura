@@ -23,7 +23,7 @@ export function ModalAddProduct({ handleClose, userId }: ModalAddProductProps) {
     }
     try {
       const response = await axios.post(
-        `http://192.168.0.10:5032/api/products/user-products/${userId}`,
+        `https://api-floricultura.azurewebsites.net/api/products/user-products/${userId}`,
         {
           name,
           quantity,

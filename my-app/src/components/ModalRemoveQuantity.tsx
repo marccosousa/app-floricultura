@@ -27,7 +27,7 @@ export function ModalRemoveQuantity({
     }
     try {
       const response = await axios.delete(
-        `http://192.168.0.10:5032/api/Products/remove-quantity/${productId}?quantity=${quantity}`
+        `https://api-floricultura.azurewebsites.net/api/Products/remove-quantity/${productId}?quantity=${quantity}`
       );
 
       if (response.status) {

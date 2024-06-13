@@ -26,7 +26,7 @@ export function Register() {
     setLoading(true);
     const hashedPassword = CryptoJS.SHA256(password).toString();
     await axios
-      .post('http://192.168.0.10:5032/api/Users', {
+      .post('https://api-floricultura.azurewebsites.net/api/Users', {
         name,
         email,
         password: hashedPassword,

@@ -26,7 +26,7 @@ export function ModalAddQuantity({
     }
     try {
       const response = await axios.post(
-        `http://192.168.0.10:5032/api/Products/add-quantity/${productId}?quantity=${quantity}`
+        `https://api-floricultura.azurewebsites.net/api/Products/add-quantity/${productId}?quantity=${quantity}`
       );
 
       if (response.status) {
